@@ -3,14 +3,11 @@ const app = express();
 
 app.use(express.json());
 
-// In-memory user storage
+
 let users = [];
 let id = 1;
 
-/**
- * POST /users
- * Create a user
- */
+
 app.post("/users", (req, res) => {
   const { name, email, username } = req.body;
 
@@ -33,18 +30,12 @@ app.post("/users", (req, res) => {
   });
 });
 
-/**
- * GET /users
- * Get all users
- */
+
 app.get("/users", (req, res) => {
   res.json(users);
 });
 
-/**
- * GET /users/:id
- * Get user by id
- */
+
 app.get("/users/:id", (req, res) => {
   const userId = parseInt(req.params.id);
 
@@ -57,10 +48,7 @@ app.get("/users/:id", (req, res) => {
   res.json(user);
 });
 
-/**
- * PUT /users/:id
- * Update user
- */
+
 app.put("/users/:id", (req, res) => {
   const userId = parseInt(req.params.id);
   const { name, email, username } = req.body;
@@ -71,7 +59,6 @@ app.put("/users/:id", (req, res) => {
     return res.status(404).json({ message: "User not found" });
   }
 
-  // Update only provided fields
   users[userIndex] = {
     ...users[userIndex],
     name: name || users[userIndex].name,
@@ -85,10 +72,6 @@ app.put("/users/:id", (req, res) => {
   });
 });
 
-/**
- * DELETE /users/:id
- * Delete user
- */
 app.delete("/users/:id", (req, res) => {
   const userId = parseInt(req.params.id);
 
@@ -106,7 +89,6 @@ app.delete("/users/:id", (req, res) => {
   });
 });
 
-// Start server
 const PORT = 5000;
 app.listen(PORT, () => {
   console.log(`Server running on port ${PORT}`);
